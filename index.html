@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7f0e9">
+<title>Маме с любовью</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f0e9;--ink:#594b47;--muted:#8c7770;--rose:#c98f91;--line:#d9b9aa;--paper:#fffaf5}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Manrope, sans-serif;overflow-x:hidden}
+main{position:relative;isolation:isolate}
+.memory-layer{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.memory-thread{position:absolute;inset:0;width:100%;height:100%;opacity:.9}
+.memory-thread path{fill:none;stroke:var(--line);stroke-width:2.2;stroke-dasharray:5 11;stroke-linecap:round}
+.memory-photo{position:absolute;width:clamp(105px,14vw,165px);padding:8px 8px 25px;background:#fffaf5;box-shadow:0 10px 28px #654b3c20;opacity:.94;transform:rotate(var(--rot));transition:transform .35s}
+.memory-photo img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#eadbd1}
+.memory-photo span{position:absolute;bottom:6px;left:0;right:0;text-align:center;font:14px "Cormorant Garamond",serif;color:#806b63}
+.memory-photo:hover{transform:rotate(0) scale(1.05)}
+/* Положение фото: top — сверху, left — слева; значения можно менять в процентах */
+.memory-photo.m1{top:5%;left:3%;--rot:-7deg}
+.memory-photo.m2{top:28%;right:3%;--rot:6deg}
+.memory-photo.m3{top:54%;left:4%;--rot:4deg}
+.memory-photo.m4{top:82%;right:4%;--rot:-5deg}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:radial-gradient(#c9a99a .65px,transparent .65px);background-size:19px 19px;z-index:-1}
+.hero{min-height:100svh;display:grid;place-items:center;padding:70px 22px;position:relative}
+.letter{width:min(760px,100%);background:rgba(255,250,245,.88);border:1px solid #eadbd1;box-shadow:0 22px 70px #7d5d4b12;padding:clamp(30px,7vw,76px);position:relative;text-align:center}
+.letter:before,.letter:after{content:"";position:absolute;width:46px;height:46px;border-color:#d7b1a6;border-style:solid;opacity:.8}
+.letter:before{top:15px;left:15px;border-width:1px 0 0 1px}.letter:after{bottom:15px;right:15px;border-width:0 1px 1px 0}
+.eyebrow{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--rose)}
+h1{font:clamp(48px,9vw,86px)/1.05 "Great Vibes",cursive;color:#a86f75;margin:18px 0 26px;font-weight:400}
+.letter p{font:clamp(17px,2.2vw,20px)/1.85 "Cormorant Garamond",serif;margin:0 auto 17px;max-width:590px}
+.signature{font:36px "Great Vibes",cursive;color:#a86f75;margin-top:28px}
+.scroll-hint{position:absolute;bottom:24px;color:#a58c82;font-size:10px;letter-spacing:.2em;text-transform:uppercase;animation:bob 2s infinite}
+@keyframes bob{50%{transform:translateY(6px)}}
+section{padding:85px 20px;position:relative}
+.section-title{text-align:center;font:clamp(42px,7vw,64px) "Great Vibes",cursive;color:#a86f75;margin:0 0 12px}
+.section-sub{text-align:center;color:var(--muted);font:16px "Cormorant Garamond",serif;margin:0 0 58px}
+#letters{background:rgba(255,250,245,.18)}
+.letters-grid{max-width:980px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.envelope{min-height:185px;perspective:900px;cursor:pointer;outline:none}
+.envelope-inner{height:100%;min-height:185px;position:relative;transform-style:preserve-3d;transition:transform .7s}
+.envelope:hover .envelope-inner,.envelope:focus .envelope-inner,.envelope.open .envelope-inner{transform:rotateY(180deg)}
+.envelope-front,.envelope-back{position:absolute;inset:0;backface-visibility:hidden;border:1px solid #e7d4ca;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+.envelope-front{background:#fffaf5;box-shadow:0 9px 24px #755d4d0c}
+.envelope-front:before{content:"";position:absolute;inset:10px;border:1px solid #eadbd1;pointer-events:none}
+.envelope-front .small{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#b18a80;margin-bottom:13px}
+.envelope-front strong{font:27px/1.15 "Cormorant Garamond",serif;font-weight:500;color:#775e58}
+.envelope-front .seal{margin-top:15px;color:#c58c8b;font-size:20px}
+.envelope-back{background:#f1e2d9;transform:rotateY(180deg);color:#65514c}
+.envelope-back p{font:18px/1.5 "Cormorant Garamond",serif;margin:0}
+.tap-hint{text-align:center;font-size:11px;color:#a58c82;margin-top:25px}
+#reasons{background:rgba(255,250,245,.2)}
+.reasons-grid{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.reason{min-height:104px;padding:17px 13px;background:rgba(255,250,245,.9);border:1px solid #eadbd1;box-shadow:0 7px 20px #755d4d08;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;transition:transform .25s,box-shadow .25s}
+.reason:hover{transform:translateY(-4px);box-shadow:0 12px 24px #755d4d14}
+.reason-number{font:italic 15px "Cormorant Garamond",serif;color:#bd8b83;margin-bottom:7px}
+.reason-text{font:17px/1.3 "Cormorant Garamond",serif;color:#705a54}
+.reasons-note{text-align:center;font:italic 16px "Cormorant Garamond",serif;color:#987d73;margin:32px auto 0}
+@media(max-width:900px){.reasons-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:650px){.reasons-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.reason{min-height:92px;padding:13px 9px}.reason-text{font-size:16px}}
+.closing{text-align:center;padding:100px 20px 120px}
+.closing p{font:22px/1.7 "Cormorant Garamond",serif;max-width:620px;margin:15px auto}
+.closing .heart{font-size:24px;color:#c98f91;margin-top:25px}
+footer{text-align:center;padding:22px;color:#a58c82;font-size:10px;letter-spacing:.12em}
+.spark{position:fixed;z-index:20;pointer-events:none;width:7px;height:7px;border-radius:50%;background:#d69a83;animation:burst .8s ease-out forwards}
+@keyframes burst{0%{opacity:1;transform:translate(0,0) scale(.5)}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(0)}}
+@media(max-width:700px){.letters-grid{grid-template-columns:repeat(2,1fr)}.memory-photo{width:clamp(82px,17vw,118px);padding:6px 6px 21px}.memory-photo span{font-size:11px}.memory-photo.m1{left:1%}.memory-photo.m2{right:1%}.memory-photo.m3{left:1%}.memory-photo.m4{right:1%}}
+@media(max-width:430px){.letters-grid{grid-template-columns:1fr}.envelope,.envelope-inner{min-height:150px}.memory-photo{width:76px;padding:5px 5px 18px;opacity:.72}.memory-photo span{font-size:9px}.memory-photo.m1{top:3%}.memory-photo.m2{top:27%}.memory-photo.m3{top:55%}.memory-photo.m4{top:84%}}
+@media(hover:none){.envelope:active .envelope-inner{transform:rotateY(180deg)}}
+</style>
+</head>
+<body>
+<main>
+  <!-- Фотографии и соединяющая их дорожка проходят через всю страницу -->
+  <div class="memory-layer" aria-hidden="true">
+    <svg class="memory-thread" viewBox="0 0 1000 3000" preserveAspectRatio="none">
+      <!-- Линия задаётся координатами SVG path: меняй числа в d, чтобы менять её изгибы -->
+      <path d="M115 100 C350 190 700 80 850 390 S920 720 600 900 S90 1110 160 1390 S820 1580 850 1850 S900 2150 520 2350 S130 2650 850 2900" />
+    </svg>
+    <figure class="memory-photo m1"><img src="photo1.jpg" alt=""><span>одно из любимых</span></figure>
+    <figure class="memory-photo m2"><img src="photo2.jpg" alt=""><span>счастливый момент</span></figure>
+    <figure class="memory-photo m3"><img src="photo3.jpg" alt=""><span>вместе ♡</span></figure>
+    <figure class="memory-photo m4"><img src="photo4.jpg" alt=""><span>и ещё одно воспоминание</span></figure>
+  </div>
+  <section class="hero" id="home">
+    <article class="letter">
+      <div class="eyebrow">самому дорогому человеку</div>
+      <h1>С днём рождения, мамочка!</h1>
+      <p>Мам, я хочу, чтобы ты знала, как много ты для меня значишь. Спасибо тебе за твою любовь, заботу, терпение и за то тепло, которое ты даришь мне даже на расстоянии.</p>
+      <p>Я благодарна тебе за то, что ты всегда была рядом, за поддержку, за мудрые слова и даже за маленькие вещи, которые, возможно, кажутся обычными, но для меня очень много значат.</p>
+      <p>Мне жаль, что сегодня я не могу обнять тебя лично. Но пусть это письмо напомнит: где бы я ни находилась, часть моего сердца всегда рядом с тобой. Я очень тебя люблю и хочу, чтобы в твоей жизни было как можно больше поводов улыбаться.</p>
+      <div class="signature">Твоя любящая дочь ♡</div>
+    </article>
+    <div class="scroll-hint">листай ниже · здесь ещё кое-что есть</div>
+  </section>
+
+  <section id="letters">
+    <h2 class="section-title">Открой, если…</h2>
+    <p class="section-sub">Маленькие письма для разных дней и настроений</p>
+    <div class="letters-grid">
+      <div class="envelope" tabindex="0" role="button" aria-label="Открой, если тебе грустно">
+        <div class="envelope-inner"><div class="envelope-front"><span class="small">письмо № 1</span><strong>Тебе грустно</strong><span class="seal">♡</span></div><div class="envelope-back"><p>Даже если сегодня не самый лёгкий день, помни: ты не одна. Я очень тебя люблю. Ты заслуживаешь нежности, заботы и всего самого хорошего. Обнимаю крепко-крепко!</p></div></div>
+      </div>
+      <div class="envelope" tabindex="0" role="button" aria-label="Открой, если скучаешь по мне">
+        <div class="envelope-inner"><div class="envelope-front"><span class="small">письмо № 2</span><strong>Скучаешь по мне</strong><span class="seal">♡</span></div><div class="envelope-back"><p>Я тоже скучаю. Расстояние — это всего лишь километры, а не то, что может изменить нашу близость. Представь, что я сейчас крепко тебя обнимаю. Скоро увидимся!</p></div></div>
+      </div>
+      <div class="envelope" tabindex="0" role="button" aria-label="Открой, если сомневаешься в себе">
+        <div class="envelope-inner"><div class="envelope-front"><span class="small">письмо № 3</span><strong>Сомневаешься в себе</strong><span class="seal">♡</span></div><div class="envelope-back"><p>Пожалуйста, не забывай, какая ты замечательная. Тебе не нужно быть идеальной, чтобы быть невероятной. Я восхищаюсь тобой и верю в тебя — всегда.</p></div></div>
+      </div>
+      <div class="envelope" tabindex="0" role="button" aria-label="Открой, если хочется улыбнуться">
+        <div class="envelope-inner"><div class="envelope-front"><span class="small">письмо № 4</span><strong>Хочется улыбнуться</strong><span class="seal">♡</span></div><div class="envelope-back"><p>Так, срочное напоминание: ты прекрасна, сегодня отличный повод съесть что-нибудь вкусное и вообще никуда не торопиться. Улыбнись, мамуль! Тебе очень идёт.</p></div></div>
+      </div>
+      <div class="envelope" tabindex="0" role="button" aria-label="Открой, если устала">
+        <div class="envelope-inner"><div class="envelope-front"><span class="small">письмо № 5</span><strong>Ты устала</strong><span class="seal">♡</span></div><div class="envelope-back"><p>Можно остановиться, выдохнуть и отдохнуть. Необязательно всё успевать и обо всём заботиться прямо сейчас. Сегодня позаботься о себе. Ты тоже очень важна.</p></div></div>
+      </div>
+      <div class="envelope" tabindex="0" role="button" aria-label="Открой просто так">
+        <div class="envelope-inner"><div class="envelope-front"><span class="small">письмо № 6</span><strong>Просто так</strong><span class="seal">♡</span></div><div class="envelope-back"><p>Я просто хотела ещё раз сказать, что люблю тебя. Спасибо, что ты — моя мама. Это одно из самых больших счастий в моей жизни. С днём рождения, родная!</p></div></div>
+      </div>
+    </div>
+    <p class="tap-hint">Наведи курсор на письмо или нажми на него, чтобы открыть ♡</p>
+  </section>
+
+
+  <section id="reasons">
+    <h2 class="section-title">100 причин не забывать верить в себя</h2>
+    <p class="section-sub">И пусть хотя бы одна из них попадётся тебе именно тогда, когда будет нужна</p>
+    <ol class="reasons-grid">
+      <li class="reason"><span class="reason-number">01</span><span class="reason-text">Ты уже справлялась с тем, что когда-то казалось невозможным.</span></li>
+      <li class="reason"><span class="reason-number">02</span><span class="reason-text">Твоя история ещё пишется — и в ней много прекрасных страниц.</span></li>
+      <li class="reason"><span class="reason-number">03</span><span class="reason-text">Ты достойна любви не за достижения, а просто потому, что ты есть.</span></li>
+      <li class="reason"><span class="reason-number">04</span><span class="reason-text">В тебе больше сил, чем ты иногда замечаешь.</span></li>
+      <li class="reason"><span class="reason-number">05</span><span class="reason-text">Ошибки не отменяют твоих достоинств.</span></li>
+      <li class="reason"><span class="reason-number">06</span><span class="reason-text">Ты можешь начинать заново столько раз, сколько потребуется.</span></li>
+      <li class="reason"><span class="reason-number">07</span><span class="reason-text">Твой опыт — не груз, а источник мудрости.</span></li>
+      <li class="reason"><span class="reason-number">08</span><span class="reason-text">Ты умеешь находить выход даже из непростых ситуаций.</span></li>
+      <li class="reason"><span class="reason-number">09</span><span class="reason-text">Мир становится теплее от твоей доброты.</span></li>
+      <li class="reason"><span class="reason-number">10</span><span class="reason-text">Ты имеешь право гордиться собой.</span></li>
+      <li class="reason"><span class="reason-number">11</span><span class="reason-text">Необязательно всё знать заранее, чтобы сделать первый шаг.</span></li>
+      <li class="reason"><span class="reason-number">12</span><span class="reason-text">Тебе можно отдыхать, не заслуживая отдых.</span></li>
+      <li class="reason"><span class="reason-number">13</span><span class="reason-text">Твоя нежность — это сила, а не слабость.</span></li>
+      <li class="reason"><span class="reason-number">14</span><span class="reason-text">Ты уже сделала очень многое.</span></li>
+      <li class="reason"><span class="reason-number">15</span><span class="reason-text">Впереди есть события, о которых ты пока даже не знаешь.</span></li>
+      <li class="reason"><span class="reason-number">16</span><span class="reason-text">Твоё мнение важно.</span></li>
+      <li class="reason"><span class="reason-number">17</span><span class="reason-text">Ты можешь менять решения, если сердце подсказывает иначе.</span></li>
+      <li class="reason"><span class="reason-number">18</span><span class="reason-text">Ты заслуживаешь того же внимания, которое даришь другим.</span></li>
+      <li class="reason"><span class="reason-number">19</span><span class="reason-text">Даже маленький шаг — это движение вперёд.</span></li>
+      <li class="reason"><span class="reason-number">20</span><span class="reason-text">Ты не обязана быть идеальной.</span></li>
+      <li class="reason"><span class="reason-number">21</span><span class="reason-text">Твоя улыбка способна менять чей-то день.</span></li>
+      <li class="reason"><span class="reason-number">22</span><span class="reason-text">Ты умеешь любить — а это огромный дар.</span></li>
+      <li class="reason"><span class="reason-number">23</span><span class="reason-text">Твои мечты не имеют срока годности.</span></li>
+      <li class="reason"><span class="reason-number">24</span><span class="reason-text">Ты можешь попросить о помощи.</span></li>
+      <li class="reason"><span class="reason-number">25</span><span class="reason-text">В тебе есть красота, которую не измерить зеркалом.</span></li>
+      <li class="reason"><span class="reason-number">26</span><span class="reason-text">Ты достойна спокойствия и радости.</span></li>
+      <li class="reason"><span class="reason-number">27</span><span class="reason-text">Твоя доброта уже оставила след в чьей-то жизни.</span></li>
+      <li class="reason"><span class="reason-number">28</span><span class="reason-text">Ты можешь выбирать себя без чувства вины.</span></li>
+      <li class="reason"><span class="reason-number">29</span><span class="reason-text">Ни один трудный день не длится вечно.</span></li>
+      <li class="reason"><span class="reason-number">30</span><span class="reason-text">Ты интересная, многогранная и неповторимая.</span></li>
+      <li class="reason"><span class="reason-number">31</span><span class="reason-text">Тебе не нужно сравнивать свой путь с чужим.</span></li>
+      <li class="reason"><span class="reason-number">32</span><span class="reason-text">Ты имеешь право передумать.</span></li>
+      <li class="reason"><span class="reason-number">33</span><span class="reason-text">Твой голос заслуживает быть услышанным.</span></li>
+      <li class="reason"><span class="reason-number">34</span><span class="reason-text">Ты можешь гордиться даже тихими победами.</span></li>
+      <li class="reason"><span class="reason-number">35</span><span class="reason-text">Впереди ещё столько поводов для смеха.</span></li>
+      <li class="reason"><span class="reason-number">36</span><span class="reason-text">Ты умеешь создавать вокруг себя уют.</span></li>
+      <li class="reason"><span class="reason-number">37</span><span class="reason-text">Твоё присутствие важно для тех, кто тебя любит.</span></li>
+      <li class="reason"><span class="reason-number">38</span><span class="reason-text">Ты сильнее своих сомнений.</span></li>
+      <li class="reason"><span class="reason-number">39</span><span class="reason-text">Ты можешь позволить себе что-то новое.</span></li>
+      <li class="reason"><span class="reason-number">40</span><span class="reason-text">Каждый возраст открывает свои возможности.</span></li>
+      <li class="reason"><span class="reason-number">41</span><span class="reason-text">Тебе можно быть разной — весёлой, уставшей, задумчивой.</span></li>
+      <li class="reason"><span class="reason-number">42</span><span class="reason-text">Ты заслуживаешь бережного отношения.</span></li>
+      <li class="reason"><span class="reason-number">43</span><span class="reason-text">Ты не должна решать всё сегодня.</span></li>
+      <li class="reason"><span class="reason-number">44</span><span class="reason-text">Твои старания имеют значение, даже если их не всегда видно.</span></li>
+      <li class="reason"><span class="reason-number">45</span><span class="reason-text">Ты способна учиться и удивлять саму себя.</span></li>
+      <li class="reason"><span class="reason-number">46</span><span class="reason-text">Твоя жизнь принадлежит тебе.</span></li>
+      <li class="reason"><span class="reason-number">47</span><span class="reason-text">Ты можешь гордиться тем, какой путь прошла.</span></li>
+      <li class="reason"><span class="reason-number">48</span><span class="reason-text">Ты достойна комплиментов и приятных слов.</span></li>
+      <li class="reason"><span class="reason-number">49</span><span class="reason-text">Твои чувства важны и имеют право быть.</span></li>
+      <li class="reason"><span class="reason-number">50</span><span class="reason-text">Ты умеешь делать обычные дни особенными.</span></li>
+      <li class="reason"><span class="reason-number">51</span><span class="reason-text">В тебе есть мудрость, к которой можно прислушаться.</span></li>
+      <li class="reason"><span class="reason-number">52</span><span class="reason-text">Ты можешь отпустить то, что больше не приносит радости.</span></li>
+      <li class="reason"><span class="reason-number">53</span><span class="reason-text">Ты не одна — рядом есть люди, которым ты дорога.</span></li>
+      <li class="reason"><span class="reason-number">54</span><span class="reason-text">Ты можешь быть новичком и не знать всего.</span></li>
+      <li class="reason"><span class="reason-number">55</span><span class="reason-text">Твоя забота меняет мир вокруг.</span></li>
+      <li class="reason"><span class="reason-number">56</span><span class="reason-text">Ты заслуживаешь маленьких радостей каждый день.</span></li>
+      <li class="reason"><span class="reason-number">57</span><span class="reason-text">Ты можешь сказать «нет» тому, что тебе не подходит.</span></li>
+      <li class="reason"><span class="reason-number">58</span><span class="reason-text">Ты не опоздала к своим мечтам.</span></li>
+      <li class="reason"><span class="reason-number">59</span><span class="reason-text">В тебе сочетаются сила и мягкость.</span></li>
+      <li class="reason"><span class="reason-number">60</span><span class="reason-text">Ты умеешь вдохновлять, даже не замечая этого.</span></li>
+      <li class="reason"><span class="reason-number">61</span><span class="reason-text">Тебе не нужно оправдывать свои желания.</span></li>
+      <li class="reason"><span class="reason-number">62</span><span class="reason-text">Ты можешь гордиться собой уже сейчас.</span></li>
+      <li class="reason"><span class="reason-number">63</span><span class="reason-text">Твои лучшие моменты не обязательно остались в прошлом.</span></li>
+      <li class="reason"><span class="reason-number">64</span><span class="reason-text">Ты достойна счастливых перемен.</span></li>
+      <li class="reason"><span class="reason-number">65</span><span class="reason-text">Ты можешь доверять себе и своему опыту.</span></li>
+      <li class="reason"><span class="reason-number">66</span><span class="reason-text">Даже в пасмурный день в тебе остаётся свет.</span></li>
+      <li class="reason"><span class="reason-number">67</span><span class="reason-text">Ты умеешь заботиться — не забывай заботиться и о себе.</span></li>
+      <li class="reason"><span class="reason-number">68</span><span class="reason-text">Ты можешь делать паузы и возвращаться с новыми силами.</span></li>
+      <li class="reason"><span class="reason-number">69</span><span class="reason-text">Твоя индивидуальность — не то, что нужно исправлять.</span></li>
+      <li class="reason"><span class="reason-number">70</span><span class="reason-text">Ты важна не только тогда, когда полезна другим.</span></li>
+      <li class="reason"><span class="reason-number">71</span><span class="reason-text">Ты имеешь право на собственный темп.</span></li>
+      <li class="reason"><span class="reason-number">72</span><span class="reason-text">Тебе можно принимать любовь и поддержку.</span></li>
+      <li class="reason"><span class="reason-number">73</span><span class="reason-text">Ты уже являешься чьим-то самым дорогим человеком.</span></li>
+      <li class="reason"><span class="reason-number">74</span><span class="reason-text">Ты можешь радоваться без особого повода.</span></li>
+      <li class="reason"><span class="reason-number">75</span><span class="reason-text">Твоё прошлое не ограничивает твоё будущее.</span></li>
+      <li class="reason"><span class="reason-number">76</span><span class="reason-text">Ты способна создавать новые счастливые воспоминания.</span></li>
+      <li class="reason"><span class="reason-number">77</span><span class="reason-text">Ты заслуживаешь того, чтобы тебя слышали.</span></li>
+      <li class="reason"><span class="reason-number">78</span><span class="reason-text">В тебе есть талант замечать хорошее.</span></li>
+      <li class="reason"><span class="reason-number">79</span><span class="reason-text">Ты можешь выбирать то, что приносит тебе тепло.</span></li>
+      <li class="reason"><span class="reason-number">80</span><span class="reason-text">Тебе не нужно справляться со всем в одиночку.</span></li>
+      <li class="reason"><span class="reason-number">81</span><span class="reason-text">Ты достойна уважения — всегда.</span></li>
+      <li class="reason"><span class="reason-number">82</span><span class="reason-text">Ты можешь ошибаться и всё равно оставаться замечательной.</span></li>
+      <li class="reason"><span class="reason-number">83</span><span class="reason-text">Твои маленькие шаги складываются в большой путь.</span></li>
+      <li class="reason"><span class="reason-number">84</span><span class="reason-text">Ты умеешь быть опорой — и сама заслуживаешь опоры.</span></li>
+      <li class="reason"><span class="reason-number">85</span><span class="reason-text">Тебе можно мечтать смело.</span></li>
+      <li class="reason"><span class="reason-number">86</span><span class="reason-text">Ты не обязана нравиться всем.</span></li>
+      <li class="reason"><span class="reason-number">87</span><span class="reason-text">Твоя жизнь полна возможностей для новых открытий.</span></li>
+      <li class="reason"><span class="reason-number">88</span><span class="reason-text">Ты можешь позволить себе перемены.</span></li>
+      <li class="reason"><span class="reason-number">89</span><span class="reason-text">Ты достойна времени для себя.</span></li>
+      <li class="reason"><span class="reason-number">90</span><span class="reason-text">Ты умеешь находить красоту в простых вещах.</span></li>
+      <li class="reason"><span class="reason-number">91</span><span class="reason-text">Твои слова могут поддержать — и твои слова тоже важны.</span></li>
+      <li class="reason"><span class="reason-number">92</span><span class="reason-text">Ты прошла большой путь, и это заслуживает уважения.</span></li>
+      <li class="reason"><span class="reason-number">93</span><span class="reason-text">Ты можешь быть собой — этого достаточно.</span></li>
+      <li class="reason"><span class="reason-number">94</span><span class="reason-text">В каждом новом дне есть шанс на что-то хорошее.</span></li>
+      <li class="reason"><span class="reason-number">95</span><span class="reason-text">Ты заслуживаешь нежности не меньше, чем любой другой человек.</span></li>
+      <li class="reason"><span class="reason-number">96</span><span class="reason-text">Ты не одна в своих переживаниях.</span></li>
+      <li class="reason"><span class="reason-number">97</span><span class="reason-text">Тебе можно верить в хорошее.</span></li>
+      <li class="reason"><span class="reason-number">98</span><span class="reason-text">Ты важна, любима и бесконечно дорога мне.</span></li>
+      <li class="reason"><span class="reason-number">99</span><span class="reason-text">Ты можешь гордиться тем, что продолжаешь идти вперёд.</span></li>
+      <li class="reason"><span class="reason-number">100</span><span class="reason-text">Я верю в тебя — даже в те дни, когда тебе самой трудно.</span></li>
+    </ol>
+    <p class="reasons-note">И это только 100 причин. На самом деле их гораздо больше. ♡</p>
+  </section>
+
+  <section class="closing">
+    <h2 class="section-title">И напоследок…</h2>
+    <p>Пусть впереди будет много светлых дней, приятных неожиданностей, спокойствия и радости. Пусть сбывается то, о чём ты мечтаешь, а рядом всегда будут люди, которые любят и ценят тебя.</p>
+    <p>С днём рождения, моя любимая мамочка!</p>
+    <div class="heart">♡ ♡ ♡</div>
+  </section>
+</main>
+<footer>СДЕЛАНО С ЛЮБОВЬЮ · ДЛЯ САМОЙ ЛУЧШЕЙ МАМЫ</footer>
+<script>
+// Салют из маленьких искр при каждом нажатии или касании.
+document.addEventListener('pointerdown', (event) => {
+  const colors = ['#d69a83','#c98f91','#e7c6a8','#b99a72','#fffaf5'];
+  for (let i = 0; i < 18; i++) {
+    const spark = document.createElement('span');
+    spark.className = 'spark';
+    spark.style.left = event.clientX + 'px';
+    spark.style.top = event.clientY + 'px';
+    spark.style.background = colors[Math.floor(Math.random()*colors.length)];
+    const angle = Math.PI * 2 * i / 18;
+    const distance = 25 + Math.random() * 55;
+    spark.style.setProperty('--x', Math.cos(angle)*distance + 'px');
+    spark.style.setProperty('--y', Math.sin(angle)*distance + 'px');
+    document.body.appendChild(spark);
+    setTimeout(() => spark.remove(), 850);
+  }
+});
+// На телефонах и при клавиатурной навигации письма открываются нажатием.
+document.querySelectorAll('.envelope').forEach(card => {
+  card.addEventListener('click', () => card.classList.toggle('open'));
+  card.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      card.classList.toggle('open');
+    }
+  });
+});
+</script>
+</body>
+</html>
